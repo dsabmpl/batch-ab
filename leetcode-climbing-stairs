@@ -1,0 +1,12 @@
+class Solution {
+    public int climbStairs(int n) {
+        if(n<=1){
+            return 1;
+        }
+        // take one step
+        int option1 = climbStairs(n-1); // 1 step at a time
+        int option2 = climbStairs(n-2); // 2 step at a time
+        return option1 + option2;
+
+    }
+}
