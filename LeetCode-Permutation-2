@@ -1,0 +1,30 @@
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        boolean [] isVisited = new boolean[nums.length]; // ALL ARE fill with false
+        List<Integer> smallList = new ArrayList<>();
+        List<List<Integer>> bigList =new ArrayList<>();
+        helper(nums, smallList, bigList, isVisited);
+        return bigList;
+
+    }
+
+    void helper(int []nums, List<Integer> smallList, List<List<Integer>> bigList, boolean []isVisited){
+        // base case 
+        if(nums.length == smallList.size() && !bigList.contains(smallList)){
+            bigList.add(new ArrayList<>(smallList));
+            return ; // Stack fall
+        }
+        // Start all the branch
+        for(int i = 0; i<nums.length; i++){
+            if(!isVisited[i]){
+                // Did some Modification
+                smallList.add(nums[i]);
+                isVisited[i]= true; // mark it
+                helper(nums, smallList, bigList, isVisited);
+                // BackTracking (Undo)
+                smallList.remove(smallList.size()-1); // Remove the last element
+                isVisited[i] = false;
+            }
+        }
+    }
+}
