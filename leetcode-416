@@ -1,0 +1,143 @@
+// Approach - 1 Brute Force 
+
+// class Solution {
+//     public boolean canPartition(int[] nums) {
+//         // Step - 1 Sum of all Array Elements
+//         // Enhance for loop Java 1.5
+//         int sum = 0;
+//         for(int num : nums){
+//             sum = sum + num;
+//         }
+//         // Step - 2 Sum not be odd
+//         if(sum % 2 !=0){
+//             return false;
+//         }
+//         // It means sum is even, get the target
+//         int target = sum / 2;
+//         return helper(nums, 0, target);
+//     }
+//     boolean helper(int nums[], int index, int target){
+//      // Base case
+//         if(target == 0){
+//             return true;
+//         }
+//         if(target<0 || nums.length == index){
+//             return false;
+//         }
+
+//         // we have 2 choices
+//         // Choice - 1 Pick it (target - nums[index])
+//         boolean pickIt = helper(nums, index + 1, target - nums[index]);
+
+//         // Choice - 2 Not Pick It (target)
+//         boolean notPickIt = helper(nums , index + 1, target);
+
+//         return pickIt || notPickIt;
+
+//     }
+
+// // Approach - 2 Top Down Approach (Memo)
+// class Solution {
+//     public boolean canPartition(int[] nums) {
+//         // Step - 1 Sum of all Array Elements
+//         // Enhance for loop Java 1.5
+//         int sum = 0;
+//         for(int num : nums){
+//             sum = sum + num;
+//         }
+//         // Step - 2 Sum not be odd
+//         if(sum % 2 !=0){
+//             return false;
+//         }
+//         // It means sum is even, get the target
+//         int target = sum / 2;
+//         // Array Build
+//         Boolean [][] cache = new Boolean[nums.length][target+1];
+//         return helper(nums, 0, target, cache);
+//     }
+//     boolean helper(int nums[], int index, int target, Boolean [][] cache){
+//      // Base case
+//         if(target == 0){
+//             return true;
+//         }
+//         if(target<0 || nums.length == index){
+//             return false;
+//         }
+
+//         // checking the value already exist in cache or not
+//         if(cache[index][target]!=null){
+//             return cache[index][target];
+//         }
+
+//         // we have 2 choices
+//         // Choice - 1 Pick it (target - nums[index])
+//         boolean pickIt = helper(nums, index + 1, target - nums[index], cache);
+
+//         // Choice - 2 Not Pick It (target)
+//         boolean notPickIt = helper(nums , index + 1, target, cache);
+//         // if not cache , then store it
+//         // store the result first in cache and then return it
+//         cache[index][target] =  pickIt || notPickIt;
+//         return cache[index][target];
+
+//     }
+// }
+// // }
+
+// Approach - 3 Tabulation (bottom up approach)
+class Solution{
+    public boolean canPartition(int[] nums) {
+       // Step - 1 Sum of all Array Elements
+        // Enhance for loop Java 1.5
+        int sum = 0;
+        for(int num : nums){
+            sum = sum + num;
+        }
+        // Step - 2 Sum not be odd
+        if(sum % 2 !=0){
+            return false;
+        }
+        // It means sum is even, get the target
+        int target = sum / 2;
+
+        boolean dp[] = new boolean[target + 1]; // fill target values (true, false)
+        dp[0] = true;
+        // fill rest of the values
+        // [1, 5, 11, 5]
+        for(int num : nums){
+            for(int i = target; i>=num; i--){
+                // (target - nums[index]) Pick It
+                // target  No Pick It
+                dp[i] = dp[i - num] || dp[i];
+            }
+        }
+        return dp[target]; // dp[11]
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
