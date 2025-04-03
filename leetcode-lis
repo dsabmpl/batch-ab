@@ -1,0 +1,77 @@
+// Approach - 1 Brute Force Solution
+// class Solution {
+//     public int lengthOfLIS(int[] nums) {
+//         // caching
+
+//         return helper(nums, 0, -1);
+//     }
+//     int helper(int nums[], int index, int prevIndex){
+//         // Base case
+//         if(nums.length == index){
+//             return 0;
+//         }
+//         // Pick it
+//         int pickIt = 0;
+//         if(prevIndex == -1 || nums[index]> nums[prevIndex]){
+//            pickIt =  1 + helper(nums , index + 1, index);
+//         }
+//         // Not pick it
+//         int notPickIt = helper(nums , index + 1, prevIndex);
+//         return Math.max(pickIt, notPickIt);
+//     }   
+// }
+
+// Approach - 2 Memoization (Top Down Approach) Recursion + Caching (Memo)
+// class Solution {
+//     public int lengthOfLIS(int[] nums) {
+//         // caching
+//         int cache [][] = new int[nums.length][nums.length];
+//         return helper(nums, 0, -1, cache);
+//     }
+//     int helper(int nums[], int index, int prevIndex, int[][] cache){
+//         // Base case
+//         if(nums.length == index){
+//             return 0;
+//         }
+//         // Before doing the compute
+//         if(cache[index][prevIndex+1]!=0){
+//             return cache[index][prevIndex+1];
+//         }
+//         // Compute
+//         // Pick it
+//         int pickIt = 0;
+//         if(prevIndex == -1 || nums[index]> nums[prevIndex]){
+//            pickIt =  1 + helper(nums , index + 1, index, cache);
+//         }
+//         // Not pick it
+//         int notPickIt = helper(nums , index + 1, prevIndex, cache);
+//         cache[index][prevIndex+1] =  Math.max(pickIt, notPickIt);
+//         return cache[index][prevIndex+1];
+//     }   
+// }
+
+
+// Approach - 3 Tabulation
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int finalMax = 0;
+        int dp[] =new int[nums.length]; // store the count of LIS
+        // nums array traverse (move to the next element)
+        for(int i = 0 ; i<nums.length; i++){
+            int max = 0;
+            // loop for prev element
+            for(int j =0 ; j<i; j++){
+                if(nums[i]>nums[j]){
+                   if(dp[j]>max){
+                        max = dp[j];
+                   }
+                }
+            }
+            dp[i] = max + 1;
+            if(dp[i]>finalMax){
+                finalMax = dp[i];
+            }
+        }
+        return finalMax;
+    }
+}
