@@ -1,0 +1,22 @@
+class Solution {
+    int missingNumber(int arr[]) {
+        // code here
+        // int sum = 0;
+        // for(int i = 1; i<=arr.length+1; i++){
+        //     sum = sum + i;
+        // }
+        // for(int i : arr){
+        //     sum = sum - i;
+        // }
+        // return sum;
+        
+         int sum = 0;
+        for(int i = 1; i<=arr.length+1; i++){
+            sum = sum ^ i;
+        }
+        for(int i : arr){
+            sum = sum ^ i;
+        }
+        return sum;
+    }
+}
