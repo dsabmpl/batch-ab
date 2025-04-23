@@ -1,0 +1,27 @@
+class Solution {
+    boolean isMatched(char openingBracket , char closingBracket){
+       return  (openingBracket == '(' && closingBracket ==')') ||
+        (openingBracket == '[' && closingBracket ==']') ||
+        (openingBracket == '{' && closingBracket =='}');
+    }
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(char bracket : s.toCharArray()){
+            // it means opening bracket found
+            if(bracket == '(' || bracket == '{' || bracket == '['){
+                stack.push(bracket);
+            }
+            else{
+                // it means i get closing bracket
+                if(!stack.isEmpty() && isMatched(stack.peek(), bracket)){
+                    stack.pop();
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+
+    }
+}
