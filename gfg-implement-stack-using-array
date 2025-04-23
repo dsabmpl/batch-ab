@@ -1,0 +1,27 @@
+class MyStack {
+    private int[] arr;
+    private int top; // array index
+
+    public MyStack() {
+        arr = new int[1000];
+        top = -1;
+    }
+
+    public void push(int x) {
+        // Your Code
+        // top++;
+        // arr[top] = x;
+        arr[++top] = x;
+    }
+
+    public int pop() {
+        // Your Code
+        if(top == -1){
+            return -1;
+        }
+        // int data = arr[top];
+        // top--;
+        // return data;
+        return arr[top--];
+    }
+}
